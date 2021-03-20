@@ -112,7 +112,12 @@ void spindle_set_state(uint8_t state, float rpm)
         #ifdef MINIMUM_SPINDLE_PWM
           if (current_pwm < MINIMUM_SPINDLE_PWM) { current_pwm = MINIMUM_SPINDLE_PWM; }
         #endif
-        OCR_REGISTER = current_pwm; // Set PWM pin output
+        /*MODIFICHE MIE*/
+        if(rpm == 100)
+          OCR_REGISTER = 0xFF;
+        else
+          OCR_REGISTER = current_pwm; // Set PWM pin output
+        /*FINE MODIFICHE MIE*/
     
         // On the Uno, spindle enable and PWM are shared, unless otherwise specified.
         #if defined(CPU_MAP_ATMEGA2560) || defined(USE_SPINDLE_DIR_AS_ENABLE_PIN) 
